@@ -1,5 +1,6 @@
-from http import HTTPStatus
 import os
+from http import HTTPStatus
+
 from fastapi import HTTPException, Request
 
 API_KEYS = os.environ.get("API_KEYS")
