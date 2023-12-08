@@ -29,6 +29,5 @@ async def test_verify_api_key_wrong_key(key):
 
 @pytest.mark.asyncio
 async def test_verify_api_key_correct_key():
-
     result = await verify_api_key(settings.API_KEY)
     assert result == settings.API_KEY

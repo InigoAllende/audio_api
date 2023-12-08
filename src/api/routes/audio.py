@@ -16,8 +16,15 @@ router = APIRouter(
 )
 
 
-@router.post("/upload", status_code=HTTPStatus.CREATED, response_class=Response)
+@router.post(
+    "/upload",
+    status_code=HTTPStatus.CREATED,
+    response_class=Response,
+    responses={415: {}},
+)
 async def audio_upload(file: UploadFile) -> Response:
+    if file.content_type.split("/")[0] != "audio":
+        raise HTTPException(status_code=HTTPStatus.UNSUPPORTED_MEDIA_TYPE)
     file_path = os.path.join(settings.STORAGE_PATH, file.filename)
     with open(file_path, "wb") as f:
         f.write(file.file.read())
@@ -31,7 +38,7 @@ async def audio_upload(file: UploadFile) -> Response:
             "content": {"audio/*": {}},
             "description": "Success.",
         },
-        404: {"Audio file not found": HTTPStatus.NOT_FOUND},
+        404: {},
     },
     response_class=FileResponse,
 )
@@ -49,7 +56,7 @@ async def audio_download(file_id: str):
     "/{file_id}/adjust_volume",
     status_code=HTTPStatus.NO_CONTENT,
     responses={
-        404: {"Audio file not found": HTTPStatus.NOT_FOUND},
+        404: {},
     },
     response_class=Response,
     description="Please provide a value for the volume increase in decibels. \
@@ -64,6 +71,8 @@ async def adjust_volume(file_id: str, request: VolumeAdjustRequest):
             detail="Audio file not found",
         )
     audio = AudioSegment.from_file(file_path)
+    print(audio.rms)
     audio = audio + request.volume_increase
+    print(audio.rms)
     audio.export(file_path)
     return Response(status_code=HTTPStatus.NO_CONTENT)

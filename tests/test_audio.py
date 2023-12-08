@@ -31,6 +31,28 @@ def test_audio_upload(client):
     assert os.path.exists(os.path.join(settings.STORAGE_PATH, FILE_NAME))
 
 
+@pytest.mark.parametrize(
+    "body, expected_exception",
+    [
+        ({"file": None}, HTTPStatus.BAD_REQUEST),
+        ({"file": ("test_name", None, "audio/*")}, HTTPStatus.BAD_REQUEST),
+        (
+            {"file": ("test_name", io.BytesIO(FILE_CONTENT), "video/*")},
+            HTTPStatus.UNSUPPORTED_MEDIA_TYPE,
+        ),
+    ],
+)
+def test_audio_upload_empty(client, body, expected_exception):
+    response = client.post(
+        url="/audio/upload",
+        files=body,
+        headers={"x-api-key": "TEST_KEY"},
+    )
+
+    assert response.status_code == expected_exception
+    assert not os.path.exists(os.path.join(settings.STORAGE_PATH, "test_name"))
+
+
 @pytest.mark.dependency(depends=["test_audio_upload"])
 def test_audio_download(client):
     response = client.get(
