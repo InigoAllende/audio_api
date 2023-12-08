@@ -71,8 +71,6 @@ async def adjust_volume(file_id: str, request: VolumeAdjustRequest):
             detail="Audio file not found",
         )
     audio = AudioSegment.from_file(file_path)
-    print(audio.rms)
     audio = audio + request.volume_increase
-    print(audio.rms)
     audio.export(file_path)
     return Response(status_code=HTTPStatus.NO_CONTENT)
