@@ -1,0 +1,13 @@
+version: "3"
+services:
+  app:
+    image: audio_api
+    build: .
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./audio_file_storage:/app/audio_file_storage
+    environment:
+      - STORAGE_PATH=./audio_file_storage
+      - API_KEY=${API_KEY}

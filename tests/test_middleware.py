@@ -29,8 +29,6 @@ async def test_verify_api_key_wrong_key(key):
 
 @pytest.mark.asyncio
 async def test_verify_api_key_correct_key():
-    assert len(settings.API_KEYS) > 0, "Make sure there are test api keys set"
 
-    for key in settings.API_KEYS:
-        result = await verify_api_key(key)
-        assert result == key
+    result = await verify_api_key(settings.API_KEY)
+    assert result == settings.API_KEY
