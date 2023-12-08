@@ -42,7 +42,7 @@ async def audio_download(file_id: str):
             status_code=HTTPStatus.NOT_FOUND,
             detail="Audio file not found",
         )
-    return FileResponse(path=file_path, media_type="audio/*")
+    return FileResponse(path=file_path, media_type="audio/*", filename=file_id)
 
 
 @router.put(

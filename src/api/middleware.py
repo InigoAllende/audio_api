@@ -7,7 +7,7 @@ from config import settings
 
 
 async def verify_api_key(x_api_key: str = Header(...)) -> str:
-    if x_api_key is None or str(x_api_key) not in settings.API_KEYS:
+    if x_api_key is None or str(x_api_key) != settings.API_KEY:
         raise HTTPException(
             status_code=HTTPStatus.FORBIDDEN,
             detail="Invalid or missing API Key",
