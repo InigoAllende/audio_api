@@ -1,17 +1,16 @@
 import os
 from http import HTTPStatus
 
-from fastapi import HTTPException, Header, Request
+from fastapi import Header, HTTPException
 
-API_KEYS = os.environ.get("API_KEYS")
+from config import settings
 
 
-async def verify_api_key(x_api_key: str = Header(...)):
-    header_api_key = x_api_key
-    if header_api_key in API_KEYS:
-        return header_api_key
+async def verify_api_key(x_api_key: str = Header(...)) -> str:
+    if x_api_key is None or str(x_api_key) not in settings.API_KEYS:
+        raise HTTPException(
+            status_code=HTTPStatus.FORBIDDEN,
+            detail="Invalid or missing API Key",
+        )
 
-    raise HTTPException(
-        status_code=HTTPStatus.FORBIDDEN,
-        detail="Invalid or missing API Key",
-    )
+    return x_api_key

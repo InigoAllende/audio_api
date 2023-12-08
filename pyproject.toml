@@ -16,4 +16,5 @@ pydub = "^0.25.1"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
 httpx = "^0.25.2"
+pytest-asyncio = "^0.23.2"
 
