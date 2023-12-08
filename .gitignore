@@ -160,6 +160,6 @@ cython_debug/
 #.idea/
 
 
-audio_file_storage
+./audio_file_storage
 resources
 .vscode

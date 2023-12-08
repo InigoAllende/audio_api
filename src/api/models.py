@@ -12,8 +12,3 @@ class VolumeAdjustRequest(BaseModel):
                 "0 is not an allowed value, it will not modify the files volume. Please provide a positive or negative integer."
             )
         return v
-
-
-class FileDownloadResponse(BaseModel):
-    filename: str
-    file: UploadFile

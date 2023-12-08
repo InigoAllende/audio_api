@@ -9,7 +9,6 @@ from api.middleware import verify_api_key
 from api.models import VolumeAdjustRequest
 from config import settings
 
-
 router = APIRouter(
     prefix="/audio",
     dependencies=[Depends(verify_api_key)],
@@ -46,7 +45,7 @@ async def audio_download(file_id: str):
     return FileResponse(path=file_path, media_type="audio/*")
 
 
-@router.post(
+@router.put(
     "/{file_id}/adjust_volume",
     status_code=HTTPStatus.NO_CONTENT,
     responses={
