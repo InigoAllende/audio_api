@@ -9,10 +9,11 @@ from api.middleware import verify_api_key
 from api.models import VolumeAdjustRequest
 from config import settings
 
+
 router = APIRouter(
     prefix="/audio",
     dependencies=[Depends(verify_api_key)],
-    responses={401: {"Unathorized": HTTPStatus.UNAUTHORIZED}},
+    responses={403: {"Forbidden": HTTPStatus.UNAUTHORIZED}},
 )
 
 
