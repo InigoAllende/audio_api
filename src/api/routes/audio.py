@@ -91,7 +91,5 @@ async def adjust_volume(file_id: str, request: VolumeAdjustRequest):
     encrypted_file = FERNET.encrypt(audio.export().read())
     with open(file_path, "wb") as f:
         f.write(encrypted_file)
-    # audio = AudioSegment.from_file(file_path)
-    # audio = audio + request.volume_increase
-    # audio.export(file_path)
+
     return Response(status_code=HTTPStatus.NO_CONTENT)
