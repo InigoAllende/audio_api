@@ -161,5 +161,4 @@ cython_debug/
 
 
 ./audio_file_storage
-resources
 .vscode

@@ -1,4 +1,3 @@
-import os
 from http import HTTPStatus
 
 from fastapi import Header, HTTPException

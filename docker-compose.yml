@@ -11,3 +11,4 @@ services:
     environment:
       - STORAGE_PATH=./audio_file_storage
       - API_KEY=${API_KEY}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}

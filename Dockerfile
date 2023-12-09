@@ -13,7 +13,7 @@ WORKDIR /app
 
 # Project initialization:
 RUN poetry config virtualenvs.create false \
-  && poetry install --no-interaction --no-ansi
+  && poetry install --no-interaction --no-ansi --without dev
 
 ENV PYTHONPATH "${PYTHONPATH}:/app/src"
 

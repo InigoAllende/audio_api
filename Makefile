@@ -1,17 +1,14 @@
 ifndef $(version)
-	version = development
+	API_KEY = SAMPLE_KEY
 endif
 
 ifndef $(version)
-	API_KEY = SAMPLE_KEY
+	ENCRYPTION_KEY = uqwXShUE_rjDk3VAn6v3YUlTR7beGY86wXosq0VaHSo=
 endif
 
 
 run-local:
 	uvicorn --reload src.main:app
 
-build:
-	docker build -t audio_api:$(version) .
-
-run: build
-	docker compose up
+run:
+	docker compose up --build
